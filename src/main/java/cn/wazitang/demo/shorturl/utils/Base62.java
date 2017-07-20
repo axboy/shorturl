@@ -7,4 +7,85 @@ package cn.wazitang.demo.shorturl.utils;
  */
 public class Base62 {
 
+    /**
+     * 当前数据库中的递增值
+     */
+    private static long dbIndex = 0;
+
+    /**
+     * 62位字符
+     */
+    private static String[] CHARS = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+            "a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
+            "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
+            "u", "v", "w", "x", "y", "z", "A", "B", "C", "D",
+            "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
+            "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X",
+            "Y", "Z"
+    };
+
+    /**
+     * 62
+     */
+    private static int SIZE = CHARS.length;
+
+    /**
+     * 生成一个短链接
+     *
+     * @return str
+     */
+    public static String getShortUrl() {
+        return getRandomStr(2) + convertDecTo62(dbIndex);
+    }
+
+    /**
+     * 修改当前的起始值
+     *
+     * @param v;
+     */
+    public static void setDbIndex(long v) {
+        dbIndex = v;
+    }
+
+    /**
+     * 获取随机字符串
+     *
+     * @param length 长度
+     * @return str
+     */
+    private static String getRandomStr(int length) {
+        StringBuilder sb = new StringBuilder();
+        while (length > 0) {
+            int i = (int) (Math.random() * SIZE);
+            sb.append(CHARS[i]);
+            length--;
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 将10进制数转为62进制字符串
+     *
+     * @param num;
+     * @return str
+     */
+    private static String convertDecTo62(long num) {
+        StringBuilder sb = new StringBuilder();
+        while (num > 0) {
+            int i = (int) (num % SIZE);
+            sb.append(CHARS[i]);
+            num /= SIZE;
+        }
+        return sb.reverse().toString();
+    }
+
+    /**
+     * test main
+     *
+     * @param args;
+     */
+    public static void main(String[] args) {
+        Base62.setDbIndex(167);
+        System.out.println(Base62.getShortUrl());
+    }
 }
