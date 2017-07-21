@@ -1,5 +1,9 @@
 package cn.wazitang.demo.shorturl.utils;
 
+import lombok.Synchronized;
+
+import java.util.Arrays;
+
 /**
  * 作者 zcw
  * 时间 2017/7/20 18:20
@@ -15,13 +19,13 @@ public class Base62 {
     /**
      * 62位字符
      */
-    private static String[] CHARS = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-            "a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
-            "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
-            "u", "v", "w", "x", "y", "z", "A", "B", "C", "D",
-            "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
-            "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X",
-            "Y", "Z"
+    private static char[] CHARS = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+            'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+            'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd',
+            'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+            'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
+            'y', 'z'
     };
 
     /**
@@ -34,8 +38,21 @@ public class Base62 {
      *
      * @return str
      */
-    public static String getShortUrl() {
+    @Synchronized
+    public static String generateShortUrl() {
+        dbIndex++;
         return getRandomStr(2) + convertDecTo62(dbIndex);
+    }
+
+    /**
+     * 根据短链接key计算数据库的id
+     *
+     * @param url;
+     * @return
+     */
+    public static long calDbIdByUrl(String url) {
+        long id = convert62ToDec(url.substring(2));
+        return id > dbIndex ? 0 : id;
     }
 
     /**
@@ -80,12 +97,31 @@ public class Base62 {
     }
 
     /**
+     * 将62进制转为10进制
+     *
+     * @param num;
+     * @return dec
+     */
+    private static long convert62ToDec(String num) {
+        char[] arr = num.toCharArray();
+        int length = arr.length;
+        long result = 0;
+        for (char c : arr) {
+            length--;
+            int position = Arrays.binarySearch(CHARS, c);
+            result += (long) Math.pow(SIZE, length) * position;
+        }
+        return result;
+    }
+
+    /**
      * test main
      *
      * @param args;
      */
     public static void main(String[] args) {
-        Base62.setDbIndex(167);
-        System.out.println(Base62.getShortUrl());
+        Base62.setDbIndex(61);
+        System.out.println(Base62.generateShortUrl());
+        System.out.println(Base62.calDbIdByUrl("aa21"));
     }
 }

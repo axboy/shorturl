@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>短链接管理</title>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+<div id="vue-app">
+    <button type="button" class="btn btn-primary"
+            v-on:click="showModal(-1)">新增
+    </button>
+    <table class="table table-hover">
+        <caption>测试表格</caption>
+        <thead>
+        <tr>
+            <th>key</th>
+            <th>短链接</th>
+            <th>源链接</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(data,index) in resp.content">
+            <th>{{data.key}}</th>
+            <th>{{data.shortUrl}}</th>
+            <th>{{data.sourceUrl}}</th>
+            <th>
+                <button type="button" class="btn btn-primary"
+                        v-on:click="showModal(index)">编辑
+                </button>
+            </th>
+        </tr>
+        </tbody>
+    </table>
+
+    <ul class="pagination">
+        <li><a href="#">&laquo;</a></li>
+        <li class="active"><a href="#">1</a></li>
+        <li class="disabled"><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#">&raquo;</a></li>
+    </ul>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">×
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel" v-if="modalData.key!=null">
+                        编辑
+                    </h4>
+                    <h4 class="modal-title" id="myModalLabel" v-if="modalData.key==null">
+                        新增
+                    </h4>
+                </div>
+                <form role="form">
+                    <div class="modal-body">
+                        <div class="form-group" v-if="modalData.key!=null">
+                            <label for="shortUrl">短链接</label>
+                            <input type="text" class="form-control" id="shortUrl" placeholder="短链接"
+                                   v-model="modalData.shortUrl" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="sourceUrl">源链接</label>
+                            <input type="text" class="form-control" id="sourceUrl" placeholder="请输入链接地址"
+                                   v-model="modalData.sourceUrl">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary"
+                                v-on:click="submit()">
+                            提交
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../js/index.js"></script>
+</html>
