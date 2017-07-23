@@ -36,7 +36,10 @@ let vue = new Vue({
                     url: vue.modalData.sourceUrl
                 },
                 success: function (data) {
-                    alert(data);
+                    alert("修改成功");
+                },
+                error:function (data) {
+                    alert("ERROR");
                 }
             });
         }

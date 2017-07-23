@@ -26,6 +26,11 @@ public class ShortUrlApplication implements CommandLineRunner {
         SpringApplication.run(ShortUrlApplication.class, args);
     }
 
+    @RequestMapping(value = {"/", "/index"})
+    public String index() {
+        return "redirect:/page/index.html";
+    }
+
     @RequestMapping("/{key}")
     public String match(@PathVariable(value = "key") String key) {
         StringBuilder sb = new StringBuilder("redirect:");
