@@ -6,7 +6,7 @@ server:
 spring:
   # datasource
   datasource:
-    url: jdbc:mysql://192.168.0.1:3306/test?characterEncoding=utf8&useSSL=true
+    url: jdbc:mysql://192.168.0.1:3306/demo?characterEncoding=utf8&useSSL=true
     username: demo_root
     password: 123456
     driverClassName: com.mysql.jdbc.Driver
