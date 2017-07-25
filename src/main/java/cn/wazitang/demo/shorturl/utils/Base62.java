@@ -1,7 +1,5 @@
 package cn.wazitang.demo.shorturl.utils;
 
-import lombok.Synchronized;
-
 import java.util.Arrays;
 
 /**
@@ -38,10 +36,8 @@ public class Base62 {
      *
      * @return str
      */
-    @Synchronized
-    public static String generateShortUrl() {
-        dbIndex++;
-        return getRandomStr(2) + convertDecTo62(dbIndex);
+    public static String generateShortUrl(long index) {
+        return getRandomStr(2) + convertDecTo62(index);
     }
 
     /**
@@ -62,6 +58,10 @@ public class Base62 {
      */
     public static void setDbIndex(long v) {
         dbIndex = v;
+    }
+
+    public static long getDbIndex() {
+        return ++dbIndex;
     }
 
     /**
@@ -112,16 +112,5 @@ public class Base62 {
             result += (long) Math.pow(SIZE, length) * position;
         }
         return result;
-    }
-
-    /**
-     * test main
-     *
-     * @param args;
-     */
-    public static void main(String[] args) {
-        Base62.setDbIndex(61);
-        System.out.println(Base62.generateShortUrl());
-        System.out.println(Base62.calDbIdByUrl("aa21"));
     }
 }

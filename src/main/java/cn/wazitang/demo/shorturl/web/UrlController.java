@@ -49,12 +49,13 @@ public class UrlController {
         if (!UrlUtils.checkUrl(url)) {
             return ResponseEntity.badRequest().build();
         }
-        String key = Base62.generateShortUrl();
+        long curIndex = Base62.getDbIndex();
+        String key = Base62.generateShortUrl(curIndex);
         UrlMapping domain = new UrlMapping();
         domain.setSourceUrl(url);
         domain.setShortUrl(key);
         domain.setKey(key);
-        domain.setId(Base62.calDbIdByUrl(key));
+        domain.setId(curIndex);
         urlMappingRepo.save(domain);
         return ResponseEntity.ok(domain);
     }
