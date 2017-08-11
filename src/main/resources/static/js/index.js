@@ -7,7 +7,7 @@ let vue = new Vue({
     methods: {
         getData(page){
             $.ajax({
-                url: `/api/url/page?page=${page}&size=20`,
+                url: `../api/url/page?page=${page}&size=20`,
                 success: function (data) {
                     vue.resp = data;
                 }
@@ -23,9 +23,9 @@ let vue = new Vue({
             })
         },
         submit(){
-            let url = "/api/url/edit";
+            let url = "../api/url/edit";
             if (!vue.modalData.key || vue.modalData.key == null) {
-                url = "/api/url/add";
+                url = "../api/url/add";
             }
             $.ajax({
                 url: url,
@@ -38,7 +38,7 @@ let vue = new Vue({
                 success: function (data) {
                     alert("修改成功");
                 },
-                error:function (data) {
+                error: function (data) {
                     alert("ERROR");
                 }
             });
