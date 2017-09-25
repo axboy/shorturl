@@ -17,7 +17,7 @@ public class UrlUtils {
 
     private static Pattern getPattern() {
         if (pattern == null) {
-            String regEx = "^((http|https)://)?([\\w-]+\\.)+[\\w-]+(/[\\w-./?%&=]*)?$";
+            String regEx = "[a-zA-z]+://[^\\s]*";
             pattern = Pattern.compile(regEx);
         }
         return pattern;

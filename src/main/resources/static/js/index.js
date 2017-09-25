@@ -7,7 +7,7 @@ let vue = new Vue({
     methods: {
         getData(page){
             $.ajax({
-                url: `../api/url/page?page=${page}&size=20`,
+                url: `../api/url/page?page=${page}&size=1000`,
                 success: function (data) {
                     vue.resp = data;
                 }
@@ -36,10 +36,10 @@ let vue = new Vue({
                     url: vue.modalData.sourceUrl
                 },
                 success: function (data) {
-                    alert("修改成功");
+                    alert("操作成功");
                 },
                 error: function (data) {
-                    alert("ERROR");
+                    alert("源链接错误");
                 }
             });
         }

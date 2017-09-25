@@ -60,7 +60,7 @@ public class Base62 {
         dbIndex = v;
     }
 
-    public static long getDbIndex() {
+    public synchronized static long getDbIndex() {
         return ++dbIndex;
     }
 

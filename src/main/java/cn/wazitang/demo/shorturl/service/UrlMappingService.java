@@ -3,7 +3,6 @@ package cn.wazitang.demo.shorturl.service;
 import cn.wazitang.demo.shorturl.domain.UrlMapping;
 import cn.wazitang.demo.shorturl.repo.UrlMappingRepo;
 import cn.wazitang.demo.shorturl.utils.Base62;
-import cn.wazitang.demo.shorturl.utils.UrlUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +17,11 @@ public class UrlMappingService {
     @Autowired
     private UrlMappingRepo urlMappingRepo;
 
+    /**
+     * 判断并查询key对应的的源链接
+     * @param key;
+     * @return
+     */
     public UrlMapping checkKey(String key) {
         if (key.length() > 8 || key.length() < 3) {
             return null;
