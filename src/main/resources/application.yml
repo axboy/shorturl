@@ -19,4 +19,4 @@ spring:
     properties.hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
 
 cn.wazitang.demo.shorturl:
-  domain: https://url.wazitang.cn/
+  domain: http://url.axboy.cn/

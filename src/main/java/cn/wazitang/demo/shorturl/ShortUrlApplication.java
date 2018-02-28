@@ -36,6 +36,8 @@ public class ShortUrlApplication implements CommandLineRunner {
         StringBuilder sb = new StringBuilder("redirect:");
         UrlMapping urlMapping = urlMappingService.checkKey(key);
         if (urlMapping != null && urlMapping.getKey().equals(key)) {
+            urlMapping.setCount(urlMapping.getCount() + 1);
+            urlMappingRepo.save(urlMapping);
             return sb.append(urlMapping.getSourceUrl()).toString();
         }
         return sb.append("/page/404.html").toString();

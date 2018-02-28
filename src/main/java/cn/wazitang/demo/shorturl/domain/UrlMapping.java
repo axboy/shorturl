@@ -26,4 +26,10 @@ public class UrlMapping {
 
     @Column(name = "source_url")
     private String sourceUrl;
+
+    @Column(name = "md5")
+    private String md5;
+
+    @Column(name = "count")
+    private Long count;
 }

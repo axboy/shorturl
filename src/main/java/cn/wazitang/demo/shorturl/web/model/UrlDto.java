@@ -12,4 +12,5 @@ public class UrlDto {
     private String key;
     private String shortUrl;
     private String sourceUrl;
+    private Long count;
 }

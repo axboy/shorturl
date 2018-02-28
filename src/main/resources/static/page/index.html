@@ -17,17 +17,21 @@
         <caption>测试表格</caption>
         <thead>
         <tr>
+            <th>#</th>
             <th>key</th>
             <th>短链接</th>
             <th>源链接</th>
+            <th>调用次数</th>
             <th>操作</th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="(data,index) in resp.content">
+            <th>{{pageData.curPage*pageData.pageSize+index+1}}</th>
             <th>{{data.key}}</th>
             <th>{{data.shortUrl}}</th>
             <th>{{data.sourceUrl}}</th>
+            <th>{{data.count}}</th>
             <th>
                 <button type="button" class="btn btn-primary"
                         v-on:click="showModal(index)">编辑
@@ -37,15 +41,31 @@
         </tbody>
     </table>
 
-    <!--<ul class="pagination">-->
-        <!--<li><a href="#">&laquo;</a></li>-->
-        <!--<li class="active"><a href="#">1</a></li>-->
-        <!--<li class="disabled"><a href="#">2</a></li>-->
-        <!--<li><a href="#">3</a></li>-->
-        <!--<li><a href="#">4</a></li>-->
-        <!--<li><a href="#">5</a></li>-->
-        <!--<li><a href="#">&raquo;</a></li>-->
-    <!--</ul>-->
+    <div class="pager">
+        <!--上一页-->
+        <span v-if="pageData.curPage==0" class="btn btn-default disabled">
+            <span v-on:click="getData(pageData.curPage - 1, pageData.pageSize)">&laquo;</span>
+        </span>
+        <span v-if="pageData.curPage>0" class="btn btn-default">
+            <span v-on:click="getData(pageData.curPage - 1, pageData.pageSize)">&laquo;</span>
+        </span>
+
+        <!--页码-->
+        <span v-for="(page, index) in pageData.pageNums">
+            <span v-if="pageData.curPage!=page" v-on:click="getData(page, pageData.pageSize)"
+                  class="btn btn-default">{{page+1}}</span>
+            <span v-if="pageData.curPage==page" v-on:click="getData(page, pageData.pageSize)"
+                  class="btn btn-default disabled">{{page+1}}</span>
+        </span>
+
+        <!--下一页-->
+        <span v-if="pageData.curPage==pageData.totalPages-1" class="btn btn-default disabled">
+            <span v-on:click="getData(pageData.curPage + 1, pageData.pageSize)">&raquo;</span>
+        </span>
+        <span v-if="pageData.curPage<pageData.totalPages-1" class="btn btn-default">
+            <span v-on:click="getData(pageData.curPage + 1, pageData.pageSize)">&raquo;</span>
+        </span>
+    </div>
 
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel" aria-hidden="true">
@@ -62,7 +82,7 @@
                         新增
                     </h4>
                 </div>
-                <form role="form">
+                <div role="form">
                     <div class="modal-body">
                         <div class="form-group" v-if="modalData.key!=null">
                             <label for="shortUrl">短链接</label>
@@ -81,11 +101,10 @@
                                 data-dismiss="modal">关闭
                         </button>
                         <button type="button" class="btn btn-primary"
-                                v-on:click="submit()">
-                            提交
+                                v-on:click="submit()">提交
                         </button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>

@@ -40,6 +40,7 @@ public class UrlController {
             dto.setKey(domain.getKey());
             dto.setShortUrl(serverDomain + domain.getShortUrl());
             dto.setSourceUrl(domain.getSourceUrl());
+            dto.setCount(domain.getCount());
             return dto;
         });
     }
@@ -56,6 +57,7 @@ public class UrlController {
         domain.setShortUrl(key);
         domain.setKey(key);
         domain.setId(curIndex);
+        domain.setCount(0L);
         urlMappingRepo.save(domain);
         return ResponseEntity.ok(domain);
     }
